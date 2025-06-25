@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForumTech - Communauté Moderne</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #f8fafc;
+            --accent: #10b981;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --bg: #ffffff;
+            --bg-alt: #f1f5f9;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-alt);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 2rem 0;
+        }
+
+        .forum-header {
+            background: var(--bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .forum-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .forum-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        /* Categories */
+        .categories {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .category {
+            background: var(--bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .category:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .category-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .category-description {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-numbers {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .last-post {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .avatar {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Recent Topics */
+        .recent-topics {
+            background: var(--bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .topic-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .topic-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+
+        .topic-item:hover {
+            background: var(--bg-alt);
+        }
+
+        .topic-info {
+            flex: 1;
+        }
+
+        .topic-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .topic-meta {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .topic-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        /* Online Users */
+        .online-users {
+            background: var(--bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .user-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .user-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-alt);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .online-indicator {
+            width: 0.5rem;
+            height: 0.5rem;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        /* Search Bar */
+        .search-container {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            background: var(--bg);
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .forum-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .category-stats {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .category {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .category:nth-child(2) { animation-delay: 0.1s; }
+        .category:nth-child(3) { animation-delay: 0.2s; }
+        .category:nth-child(4) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">ForumTech</div>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showSection('home')">Accueil</a></li>
+                    <li><a href="#" onclick="showSection('categories')">Catégories</a></li>
+                    <li><a href="#" onclick="showSection('members')">Membres</a></li>
+                    <li><a href="#" onclick="showSection('search')">Recherche</a></li>
+                </ul>
+                <div class="user-menu">
+                    <button class="btn btn-secondary" onclick="toggleNotifications()">🔔</button>
+                    <button class="btn btn-primary" onclick="showLoginModal()">Connexion</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Rechercher dans le forum..." onkeyup="searchForum(this.value)">
+                <span class="search-icon">🔍</span>
+            </div>
+
+            <!-- Forum Header -->
+            <div class="forum-header">
+                <h1 class="forum-title">Bienvenue sur ForumTech</h1>
+                <p>La communauté des passionnés de technologie</p>
+                <div class="forum-stats">
+                    <div class="stat">
+                        <div class="stat-number">15,847</div>
+                        <div class="stat-label">Membres</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">2,341</div>
+                        <div class="stat-label">Sujets</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">48,293</div>
+                        <div class="stat-label">Messages</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">234</div>
+                        <div class="stat-label">En ligne</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div class="categories">
+                <div class="category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(45deg, #3b82f6, #1d4ed8);">💻</div>
+                        <div>
+                            <div class="category-title">Développement Web</div>
+                            <div class="category-description">HTML, CSS, JavaScript, frameworks modernes</div>
+                        </div>
+                    </div>
+                    <div class="category-stats">
+                        <div class="category-numbers">
+                            <span>342 sujets</span>
+                            <span>1,847 messages</span>
+                        </div>
+                        <div class="last-post">
+                            <div class="avatar">JD</div>
+                            <div>
+                                <div>Jean Dupont</div>
+                                <div>Il y a 2 minutes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(45deg, #10b981, #059669);">📱</div>
+                        <div>
+                            <div class="category-title">Développement Mobile</div>
+                            <div class="category-description">iOS, Android, React Native, Flutter</div>
+                        </div>
+                    </div>
+                    <div class="category-stats">
+                        <div class="category-numbers">
+                            <span>189 sujets</span>
+                            <span>923 messages</span>
+                        </div>
+                        <div class="last-post">
+                            <div class="avatar">ML</div>
+                            <div>
+                                <div>Marie Lefèvre</div>
+                                <div>Il y a 15 minutes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(45deg, #f59e0b, #d97706);">🛠️</div>
+                        <div>
+                            <div class="category-title">DevOps & Infrastructure</div>
+                            <div class="category-description">Docker, Kubernetes, CI/CD, Cloud</div>
+                        </div>
+                    </div>
+                    <div class="category-stats">
+                        <div class="category-numbers">
+                            <span>156 sujets</span>
+                            <span>678 messages</span>
+                        </div>
+                        <div class="last-post">
+                            <div class="avatar">PM</div>
+                            <div>
+                                <div>Pierre Martin</div>
+                                <div>Il y a 1 heure</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">
+                        <div class="category-icon" style="background: linear-gradient(45deg, #8b5cf6, #7c3aed);">🤖</div>
+                        <div>
+                            <div class="category-title">Intelligence Artificielle</div>
+                            <div class="category-description">Machine Learning, Deep Learning, IA</div>
+                        </div>
+                    </div>
+                    <div class="category-stats">
+                        <div class="category-numbers">
+                            <span>98 sujets</span>
+                            <span>456 messages</span>
+                        </div>
+                        <div class="last-post">
+                            <div class="avatar">SB</div>
+                            <div>
+                                <div>Sophie Bernard</div>
+                                <div>Il y a 3 heures</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Topics -->
+            <div class="recent-topics">
+                <h2 class="section-title">🔥 Sujets récents</h2>
+                <div class="topic-list">
+                    <div class="topic-item" onclick="openTopic(1)">
+                        <div class="avatar">JD</div>
+                        <div class="topic-info">
+                            <div class="topic-title">Comment optimiser les performances de React ?</div>
+                            <div class="topic-meta">Par Jean Dupont • Développement Web</div>
+                        </div>
+                        <div class="topic-stats">
+                            <span>12 réponses</span>
+                            <span>234 vues</span>
+                        </div>
+                    </div>
+                    
+                    <div class="topic-item" onclick="openTopic(2)">
+                        <div class="avatar">ML</div>
+                        <div class="topic-info">
+                            <div class="topic-title">Flutter vs React Native en 2025</div>
+                            <div class="topic-meta">Par Marie Lefèvre • Développement Mobile</div>
+                        </div>
+                        <div class="topic-stats">
+                            <span>8 réponses</span>
+                            <span>156 vues</span>
+                        </div>
+                    </div>
+                    
+                    <div class="topic-item" onclick="openTopic(3)">
+                        <div class="avatar">PM</div>
+                        <div class="topic-info">
+                            <div class="topic-title">Configuration Docker pour microservices</div>
+                            <div class="topic-meta">Par Pierre Martin • DevOps & Infrastructure</div>
+                        </div>
+                        <div class="topic-stats">
+                            <span>15 réponses</span>
+                            <span>367 vues</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Online Users -->
+            <div class="online-users">
+                <h2 class="section-title">👥 Membres en ligne (234)</h2>
+                <div class="user-list">
+                    <div class="user-tag">
+                        <div class="online-indicator"></div>
+                        <div class="avatar">JD</div>
+                        <span>Jean Dupont</span>
+                    </div>
+                    <div class="user-tag">
+                        <div class="online-indicator"></div>
+                        <div class="avatar">ML</div>
+                        <span>Marie Lefèvre</span>
+                    </div>
+                    <div class="user-tag">
+                        <div class="online-indicator"></div>
+                        <div class="avatar">PM</div>
+                        <span>Pierre Martin</span>
+                    </div>
+                    <div class="user-tag">
+                        <div class="online-indicator"></div>
+                        <div class="avatar">SB</div>
+                        <span>Sophie Bernard</span>
+                    </div>
+                    <div class="user-tag">
+                        <div class="online-indicator"></div>
+                        <div class="avatar">AC</div>
+                        <span>Alex Chen</span>
+                    </div>
+                    <div class="user-tag">
+                        <div class="online-indicator"></div>
+                        <div class="avatar">LT</div>
+                        <span>Lucas Tremblay</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Données du forum stockées en mémoire
+        let forumData = {
+            categories: [
+                {
+                    id: 1,
+                    name: "Développement Web",
+                    description: "HTML, CSS, JavaScript, frameworks modernes",
+                    topics: 342,
+                    posts: 1847,
+                    icon: "💻"
+                },
+                {
+                    id: 2,
+                    name: "Développement Mobile",
+                    description: "iOS, Android, React Native, Flutter",
+                    topics: 189,
+                    posts: 923,
+                    icon: "📱"
+                }
+            ],
+            topics: [
+                {
+                    id: 1,
+                    title: "Comment optimiser les performances de React ?",
+                    author: "Jean Dupont",
+                    category: "Développement Web",
+                    replies: 12,
+                    views: 234,
+                    lastPost: "Il y a 2 minutes"
+                },
+                {
+                    id: 2,
+                    title: "Flutter vs React Native en 2025",
+                    author: "Marie Lefèvre",
+                    category: "Développement Mobile",
+                    replies: 8,
+                    views: 156,
+                    lastPost: "Il y a 15 minutes"
+                }
+            ],
+            users: [
+                { name: "Jean Dupont", avatar: "JD", online: true },
+                { name: "Marie Lefèvre", avatar: "ML", online: true },
+                { name: "Pierre Martin", avatar: "PM", online: true }
+            ]
+        };
+
+        // Fonctions interactives
+        function showSection(section) {
+            console.log(`Navigation vers: ${section}`);
+            // Ici vous pourriez implémenter la navigation entre sections
+        }
+
+        function toggleNotifications() {
+            alert("Notifications: 3 nouveaux messages non lus");
+        }
+
+        function showLoginModal() {
+            const username = prompt("Nom d'utilisateur:");
+            if (username) {
+                alert(`Bienvenue ${username}! (Simulation de connexion)`);
+                updateUserInterface(username);
+            }
+        }
+
+        function updateUserInterface(username) {
+            const userMenu = document.querySelector('.user-menu');
+            userMenu.innerHTML = `
+                <button class="btn btn-secondary">🔔</button>
+                <div class="user-tag">
+                    <div class="online-indicator"></div>
+                    <div class="avatar">${username.charAt(0).toUpperCase()}</div>
+                    <span>${username}</span>
+                </div>
+                <button class="btn btn-secondary" onclick="logout()">Déconnexion</button>
+            `;
+        }
+
+        function logout() {
+            location.reload();
+        }
+
+        function searchForum(query) {
+            if (query.length > 2) {
+                console.log(`Recherche: "${query}"`);
+                // Ici vous pourriez implémenter la recherche en temps réel
+                highlightSearchResults(query);
+            }
+        }
+
+        function highlightSearchResults(query) {
+            const topics = document.querySelectorAll('.topic-title');
+            topics.forEach(topic => {
+                const text = topic.textContent;
+                if (text.toLowerCase().includes(query.toLowerCase())) {
+                    topic.style.background = 'linear-gradient(120deg, #a8edea 0%, #fed6e3 100%)';
+                    topic.style.padding = '0.25rem';
+                    topic.style.borderRadius = '0.25rem';
+                } else {
+                    topic.style.background = 'none';
+                    topic.style.padding = '0';
+                }
+            });
+        }
+
+        function openTopic(topicId) {
+            const topic = forumData.topics.find(t => t.id === topicId);
+            if (topic) {
+                alert(`Ouverture du sujet: "${topic.title}"\nAuteur: ${topic.author}\nRéponses: ${topic.replies}`);
+                // Ici vous pourriez naviguer vers la page du sujet
+            }
+        }
+
+        // Fonctionnalités avancées
+        function createNewTopic() {
+            const title = prompt("Titre du nouveau sujet:");
+            if (title) {
+                const newTopic = {
+                    id: forumData.topics.length + 1,
+                    title: title,
+                    author: "Utilisateur Actuel",
+                    category: "Général",
+                    replies: 0,
+                    views: 1,
+                    lastPost: "À l'instant"
+                };
+                forumData.topics.unshift(newTopic);
+                updateTopicsList();
+            }
+        }
+
+        function updateTopicsList() {
+            const topicList = document.querySelector('.topic-list');
+            topicList.innerHTML = '';
+            
+            forumData.topics.forEach(topic => {
+                const topicElement = document.createElement('div');
+                topicElement.className = 'topic-item';
+                topicElement.onclick = () => openTopic(topic.id);
+                topicElement.innerHTML = `
+                    <div class="avatar">${topic.author.split(' ').map(n => n[0]).join('')}</div>
+                    <div class="topic-info">
+                        <div class="topic-title">${topic.title}</div>
+                        <div class="topic-meta">Par ${topic.author} • ${topic.category}</div>
+                    </div>
+                    <div class="topic-stats">
+                        <span>${topic.replies} réponses</span>
+                        <span>${topic.views} vues</span>
+                    </div>
+                `;
+                topicList.appendChild(topicElement);
+            });
+        }
+
+        // Effet de chargement progressif
+        document.addEventListener('DOMContentLoaded', function() {
+            const categories = document.querySelectorAll('.category');
+            categories.forEach((category, index) => {
+                category.style.opacity = '0';
+                category.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    category.style.transition = 'all 0.6s ease-out';
+                    category.style.opacity = '1';
+                    category.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Simulation de mises à jour en temps réel
+        setInterval(() => {
+            const stats = document.querySelectorAll('.stat-number');
+            if (stats.length > 0) {
+                const randomStat = stats[Math.floor(Math.random() * stats.length)];
+                const currentValue = parseInt(randomStat.textContent.replace(',', ''));
+                randomStat.textContent = (currentValue + 1).toLocaleString();
+            }
+        }, 5000);
+
+        // Gestion des raccourcis clavier
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'k') {
+                e.preventDefault();
+                document.querySelector('.search-input').focus();
+            }
+            if (e.ctrlKey && e.key === 'n') {
+                e.preventDefault();
+                createNewTopic();
+            }
+        });
+    </script>
+</body>
+</html>
