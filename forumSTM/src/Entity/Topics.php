@@ -22,6 +22,9 @@ class Topics
     #[ORM\Column(nullable: true)]
     private ?int $views = null;
 
+    #[ORM\ManyToOne(inversedBy: 'topics')]
+    private ?Posts $post = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class Topics
     public function setViews(?int $views): static
     {
         $this->views = $views;
+
+        return $this;
+    }
+
+    public function getPost(): ?Posts
+    {
+        return $this->post;
+    }
+
+    public function setPost(?Posts $post): static
+    {
+        $this->post = $post;
 
         return $this;
     }
