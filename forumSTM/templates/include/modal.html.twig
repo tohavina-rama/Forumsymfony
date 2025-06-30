@@ -1,0 +1,27 @@
+<div class="modal-overlay" id="authModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2 class="modal-title" id="modalTitle">Connexion</h2>
+            <button class="close-btn" onclick="closeAuthModal()">&times;</button>
+        </div>
+
+        <div class="auth-tabs">
+            <button class="auth-tab active" onclick="switchTab('login')">Se connecter</button>
+            <button class="auth-tab" onclick="switchTab('register')">S'inscrire</button>
+        </div>
+
+        <!-- Formulaire de connexion -->
+        <div class="auth-form active" id="loginForm">
+
+        </div>
+
+        <!-- Formulaire d'inscription -->
+        <div class="auth-form" id="registerForm">
+           {% include 'registration/register.html.twig' with { registrationForm: registrationForm } %}
+            </div>
+
+
+
+
+    </div>
+</div>

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PostsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostsRepository::class)]
@@ -13,7 +15,7 @@ class Posts
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $content = null;
 
     #[ORM\Column]
@@ -21,6 +23,27 @@ class Posts
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    private ?User $author = null;
+
+    /**
+     * @var Collection<int, Category>
+     */
+    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'post')]
+    private Collection $categories;
+
+    /**
+     * @var Collection<int, Topics>
+     */
+    #[ORM\OneToMany(targetEntity: Topics::class, mappedBy: 'post')]
+    private Collection $topics;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+        $this->topics = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -59,6 +82,75 @@ class Posts
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): static
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+            $category->addPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removePost($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Topics>
+     */
+    public function getTopics(): Collection
+    {
+        return $this->topics;
+    }
+
+    public function addTopic(Topics $topic): static
+    {
+        if (!$this->topics->contains($topic)) {
+            $this->topics->add($topic);
+            $topic->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTopic(Topics $topic): static
+    {
+        if ($this->topics->removeElement($topic)) {
+            // set the owning side to null (unless already changed)
+            if ($topic->getPost() === $this) {
+                $topic->setPost(null);
+            }
+        }
 
         return $this;
     }
