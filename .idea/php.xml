@@ -140,9 +140,15 @@
       <path value="$PROJECT_DIR$/forumSTM/vendor/symfony/error-handler" />
       <path value="$PROJECT_DIR$/forumSTM/vendor/symfony/finder" />
       <path value="$PROJECT_DIR$/forumSTM/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/forumSTM/vendor/easycorp/easyadmin-bundle" />
+      <path value="$PROJECT_DIR$/forumSTM/vendor/symfony/uid" />
+      <path value="$PROJECT_DIR$/forumSTM/vendor/symfony/ux-twig-component" />
+      <path value="$PROJECT_DIR$/forumSTM/vendor/symfony/polyfill-uuid" />
+      <path value="$PROJECT_DIR$/forumSTM/vendor/symfony/webpack-encore-bundle" />
+      <path value="$PROJECT_DIR$/forumSTM/vendor/twig/html-extra" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="8.4">
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.2">
     <option name="suggestChangeDefaultLanguageLevel" value="false" />
   </component>
   <component name="PhpStanOptionsConfiguration">

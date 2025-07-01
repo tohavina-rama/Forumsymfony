@@ -25,6 +25,10 @@ body {
     color: var(--text);
 }
 
+.alert {
+    color: red;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -286,7 +290,7 @@ body {
     color: var(--text-light);
 }
 
-/* Online Users */
+/* Online User */
 .online-users {
     background: var(--bg);
     border-radius: 1rem;

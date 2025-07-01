@@ -45,3 +45,19 @@ document.getElementById('authModal').addEventListener('click', function(e) {
         closeAuthModal();
     }
 });
+
+
+document.querySelector('#loginForm form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+
+    const response = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+    });
+
+    const html = await response.text();
+    document.querySelector('#loginForm').innerHTML = html;
+});

@@ -12,16 +12,13 @@
 
         <!-- Formulaire de connexion -->
         <div class="auth-form active" id="loginForm">
-
+          {% include 'security/login.html.twig' with { last_username: lastUsername, error: error } %}
         </div>
 
         <!-- Formulaire d'inscription -->
         <div class="auth-form" id="registerForm">
            {% include 'registration/register.html.twig' with { registrationForm: registrationForm } %}
             </div>
-
-
-
 
     </div>
 </div>

@@ -15,7 +15,7 @@ class Comment
     private ?int $id = null;
 
     #[ORM\ManyToOne]
-    private ?USER $author = null;
+    private ?User $author = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
@@ -31,12 +31,12 @@ class Comment
         return $this->id;
     }
 
-    public function getAuthor(): ?USER
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(?USER $author): static
+    public function setAuthor(?User $author): static
     {
         $this->author = $author;
 

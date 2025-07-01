@@ -33,16 +33,11 @@ class Posts
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'post')]
     private Collection $categories;
 
-    /**
-     * @var Collection<int, Topics>
-     */
-    #[ORM\OneToMany(targetEntity: Topics::class, mappedBy: 'post')]
-    private Collection $topics;
+
 
     public function __construct()
     {
         $this->categories = new ArrayCollection();
-        $this->topics = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -125,33 +120,5 @@ class Posts
         return $this;
     }
 
-    /**
-     * @return Collection<int, Topics>
-     */
-    public function getTopics(): Collection
-    {
-        return $this->topics;
-    }
 
-    public function addTopic(Topics $topic): static
-    {
-        if (!$this->topics->contains($topic)) {
-            $this->topics->add($topic);
-            $topic->setPost($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTopic(Topics $topic): static
-    {
-        if ($this->topics->removeElement($topic)) {
-            // set the owning side to null (unless already changed)
-            if ($topic->getPost() === $this) {
-                $topic->setPost(null);
-            }
-        }
-
-        return $this;
-    }
 }
