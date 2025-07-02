@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sujets{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <a class="btn addbtn" href="{{ path('app_posts_new') }}" class="btn-primary">Nouveau Sujet</a>
+
+        {% include '/include/searchbar.html.twig' %}
+        {% include '/include/recenttopics.html.twig' %}
+        <!-- Topics Container -->
+        <div class="recent-topics">
+            <div class="topic-list">
+                <h2 class="section-title">
+                    📋 Tous les sujets
+                </h2>
+                {% for post in posts %}
+                    <div class="topic-item" data-title="introduction développement web moderne">
+                        <div class="avatar">AH</div>
+                        <div class="topic-info">
+                            <div class="topic-title">{{ post.title }}</div>
+                            <div><p class="post-excerpt">{{ post.content|slice(0, 120) ~ '...' }}</p></div>
+                            <div class="topic-meta">
+                                <span>👤 Nom de l'auteur a réglé</span>
+                                <span>📅 {{ post.createdAt|date('d/m/Y') }}</span>
+                                <span class="category-tag dev">Catégorie à réglé</span>
+                            </div>
+
+                        </div>
+
+                        <div class="topic-actions">
+                            <a class="btn btn-success" href="{{ path('app_posts_show', {'id': post.id}) }}" class="post-link">👀 Voir</a>
+                        </div>
+
+                        <a href="{{ path('app_posts_show', {'id': post.id}) }}" class="post-link">Voir</a>
+                    </div>
+                {% else %}
+                    <p>Aucun post trouvé.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

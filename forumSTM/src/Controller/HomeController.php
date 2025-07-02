@@ -14,15 +14,8 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(Request $request, AuthenticationUtils $authenticationUtils): Response
     {
-        $form = $this->createForm(RegistrationForm::class);
 
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('/home/index.html.twig', [
-            'registrationForm' => $form->createView(),
-            'lastUsername' => $lastUsername,
-            'error' => $error,
-        ]);
+        return $this->render('/home/index.html.twig');
     }
 }

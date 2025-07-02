@@ -3,15 +3,19 @@ window.showSection = function(section) {
     // Ici vous pourriez implémenter la navigation entre sections
 };
 
-window.showLoginModal = function() {
-    const modal = document.getElementById('authModal');
-    modal.style.display = 'flex';
+window.showLoginModal = async function() {
+    const response = await fetch('/modal/login');
+    const html = await response.text();
+    document.getElementById('modal-container').innerHTML = html;
+    document.getElementById('authModal').style.display = 'flex';
     window.switchTab('login');
 };
 
-window.showRegisterModal = function() {
-    const modal = document.getElementById('authModal');
-    modal.style.display = 'flex';
+window.showRegisterModal = async function() {
+    const response = await fetch('/modal/login');
+    const html = await response.text();
+    document.getElementById('modal-container').innerHTML = html;
+    document.getElementById('authModal').style.display = 'flex';
     window.switchTab('register');
 };
 

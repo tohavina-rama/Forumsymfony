@@ -24,6 +24,7 @@ class Posts
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+
     #[ORM\ManyToOne(inversedBy: 'posts')]
     private ?User $author = null;
 
@@ -33,10 +34,15 @@ class Posts
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'post')]
     private Collection $categories;
 
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
 
 
     public function __construct()
     {
+        $now = new \DateTimeImmutable();
+        $this->createdAt = $now;
+        $this->updatedAt = $now;
         $this->categories = new ArrayCollection();
     }
 
@@ -116,6 +122,18 @@ class Posts
         if ($this->categories->removeElement($category)) {
             $category->removePost($this);
         }
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): static
+    {
+        $this->title = $title;
 
         return $this;
     }

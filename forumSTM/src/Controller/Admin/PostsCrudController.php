@@ -2,25 +2,27 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Comment;
+use App\Entity\Posts;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class CommentCrudController extends AbstractCrudController
+class PostsCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Comment::class;
+        return Posts::class;
     }
 
+    /*
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextEditorField::new('content'),
-            BooleanField::new('isValidated','Approuvé'),
+            IdField::new('id'),
+            TextField::new('title'),
+            TextEditorField::new('description'),
         ];
     }
+    */
 }
