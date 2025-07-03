@@ -1,0 +1,14 @@
+{# templates/member/index.html.twig #}
+{% extends 'base.html.twig' %} {# Assurez-vous que votre base.html.twig existe et est correcte #}
+
+{% block title %}ForumTech - Recherche{% endblock %}
+
+{% block body %}
+    <main class="main">
+        <div class="container">
+            <h1>{{ message|default('Page de recherche') }}</h1>
+            <p>Ceci est la barre de recherche.</p>
+        </div>
+        {% include 'partials/searchbar.html.twig' %}
+    </main>
+{% endblock %}
