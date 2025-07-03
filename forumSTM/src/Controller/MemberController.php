@@ -12,4 +12,5 @@ final class MemberController extends AbstractController
     public function index(): Response
     {
         return $this->render('member/index.html.twig');
+    }
 }
