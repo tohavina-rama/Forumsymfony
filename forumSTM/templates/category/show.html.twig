@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Category{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="topic-header">
+        <h1 class="topic-title">{{ category.name }}</h1>
+                <div class="topic-stats">
+            <div class="stat">
+                <div class="stat-number">{{ postsNumber }}</div>
+                <div class="stat-label">Sujets</div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Posts Section -->
+
+    <div class="topic-list">
+
+        <div class="recent-topics">
+            {% if app.user %}
+                <a class="btn btn-primary" id="addbtn" href="{{ path('app_posts_new') }}"><span
+                        style="font-weight:bold;">&#43;</span> Nouveau Sujet</a>
+            {% endif %}
+            {% for post in posts %}
+            <div class="topic-item" data-title={{ post.title }}
+            style="cursor:pointer;"
+                 onclick="window.location.href='{{ path('app_posts_show', {'id': post.id}) }}'">
+                <div class="avatar">
+                    {{ post.author.firstName|slice(0, 1)|upper }}{{ post.author.lastName|slice(0, 1)|upper }}
+                </div>
+                <div class="topic-info">
+                    <div class="topic-title">{{ post.title }}</div>
+                    <div><p class="post-excerpt">{{ post.content|slice(0, 150) ~ '...' }}</p></div>
+                    <div class="topic-meta">
+                        <span>👤 {{ post.author.firstName }} {{ post.author.lastName }} </span>
+                        <span>&nbsp; 📅 {{ post.createdAt|relative_time }}</span>
+                        <span class="category-tag dev">&nbsp;{{ post.category.name }}</span>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>Aucun sujet trouvé.</p>
+        {% endfor %}
+    </div>
+    </div>
+
+
+
+{% endblock %}

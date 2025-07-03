@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Catégories{% endblock %}
+{% block title %}Category index{% endblock %}
 
 {% block body %}
-    {% include 'partials/showcategorie.html.Twig' %}
+<div class="container">
+
+    {% include '/partials/showcategorie.html.Twig' %}
+
+    <a href="{{ path('app_category_new') }}">Create new</a>
+</div>
 {% endblock %}

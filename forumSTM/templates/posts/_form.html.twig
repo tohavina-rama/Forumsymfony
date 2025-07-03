@@ -1,12 +1,19 @@
-{{ form_start(form, {'action': path('app_posts_new')}) }}
+{{ form_start(form, {'action': form_action|default(path('app_posts_new'))}) }}
 
- {{ form_label(form.content, "Titre", {'label_attr': {'class': 'form-label'}}) }}
+{{ form_label(form.category, "Catégorie", {'label_attr': {'class': 'form-label'}}) }}
+ {{ form_widget(form.category, {'attr': {'class': 'form-input', 'placeholder': 'Titre du sujet'}}) }}
+    {{ form_errors(form.category) }}
+
+ {{ form_label(form.title, "Titre", {'label_attr': {'class': 'form-label'}}) }}
+ {{ form_widget(form.title, {'attr': {'class': 'form-input', 'placeholder': 'Titre du sujet'}}) }}
+    {{ form_errors(form.title) }}
 
 <div class="form-group">
     {{ form_label(form.content, "Contenu", {'label_attr': {'class': 'form-label'}}) }}
-    {{ form_widget(form.content, {'attr': {'class': 'form-input', 'placeholder': 'Écrivez votre message ici'}}) }}
+    {{ form_widget(form.content, {'attr': {'class': 'form-input plus', 'placeholder': 'Écrivez votre message ici'}}) }}
     {{ form_errors(form.content) }}
 </div>
 
-<button class="btn">{{ button_label|default('Enregistrer') }}</button>
+<button class="btn btn-secondary">{{ button_label|default('Enregistrer') }}</button>
+
 {{ form_end(form) }}

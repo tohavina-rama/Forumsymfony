@@ -3,23 +3,31 @@
     <h1 class="forum-title">Bienvenue sur ForumTech</h1>
     <p>La communauté des passionnés de technologie</p>
     <div class="forum-stats">
-        <div class="stat">
-            <div class="stat-number">15,847</div>
-            <div class="stat-label">Membres</div>
-        </div>
-        <div class="stat">
-            <div class="stat-number">
-                {{ postsCount}}
-            </div>
-            <div class="stat-label">Sujets</div>
-        </div>
-        <div class="stat">
-            <div class="stat-number">48,293</div>
-            <div class="stat-label">Messages</div>
-        </div>
-        <div class="stat">
-            <div class="stat-number">234</div>
-            <div class="stat-label">En ligne</div>
-        </div>
+      <div class="stat">
+          <div class="stat-number">{{ usersCount }}</div>
+          <div class="stat-label">
+              {{ usersCount > 1 ? 'Membres' : 'Membre' }}
+          </div>
+      </div>
+      <div class="stat">
+          <div class="stat-number">
+              {{ postsCount }}
+          </div>
+          <div class="stat-label">
+              {{ postsCount > 1 ? 'Sujets' : 'Sujet' }}
+          </div>
+      </div>
+      <div class="stat">
+          <div class="stat-number">48,293</div>
+          <div class="stat-label">
+              48,293 > 1 ? 'Messages' : 'Message'
+          </div>
+      </div>
+      <div class="stat">
+          <div class="stat-number">{{ categoryCount }}</div>
+          <div class="stat-label">
+              {{ categoryCount > 1 ? 'Catégories' : 'Catégorie' }}
+          </div>
+      </div>
     </div>
 </div>
