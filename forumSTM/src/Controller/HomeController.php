@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,10 +15,11 @@ use App\Repository\PostsRepository;
 final class HomeController extends AbstractController
 {
     #[Route('/', name: 'home')]
-    public function index(UserRepository $userRepository, PostsRepository $postsRepository, CategoryRepository $categoryRepository): Response
+    public function index(UserRepository $userRepository, PostsRepository $postsRepository, CategoryRepository $categoryRepository, CommentRepository $commentRepository): Response
     {
         $usersCount = $userRepository->count([]);
         $categoryCount = $categoryRepository->count([]);
+        $commentsCount = $commentRepository->count([]);
 
         $posts = $postsRepository->findBy([], ['createdAt' => 'DESC']);
         $postsCount = $postsRepository->count([]);
@@ -28,6 +30,7 @@ final class HomeController extends AbstractController
             'postsCount' => $postsCount,
             'usersCount' => $usersCount,
             'categoryCount' => $categoryCount,
+            'commentsCount' => $commentsCount
         ]);
     }
 }
