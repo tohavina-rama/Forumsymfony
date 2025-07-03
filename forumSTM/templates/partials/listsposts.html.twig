@@ -8,7 +8,7 @@
             <a class="btn btn-primary" id="addbtn" href="{{ path('app_posts_new') }}"><span
                     style="font-weight:bold;">&#43;</span> Nouveau Sujet</a>
         {% endif %}
-        {% for post in posts|slice(0, 5) %}
+        {% for post in posts|slice(0, 3) %}
 
             <div class="topic-item" data-title="introduction développement web moderne"
                  style="cursor:pointer;"
