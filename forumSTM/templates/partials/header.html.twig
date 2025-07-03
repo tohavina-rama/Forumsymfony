@@ -3,15 +3,16 @@
         <nav class="nav">
             <div class="logo">ForumTech</div>
             <ul class="nav-links">
-                <li><a href="#" onclick="showSection('home')">Accueil</a></li>
-                <li><a href="#" onclick="showSection('categories')">Catégories</a></li>
-                <li><a href="#" onclick="showSection('members')">Membres</a></li>
-                <li><a href="#" onclick="showSection('search')">Recherche</a></li>
+                <li><a href={{ path('home') }} >Accueil</a></li>
+                <li><a href={{ path('category.index') }} >Catégories</a></li>
+                <li><a href={{ path('app_posts_index') }} >Sujets</a></li>
+
             </ul>
             <div class="user-menu">
-                <button class="btn btn-secondary" onclick="toggleNotifications()">🔔</button>
                 {% if app.user %}
-                   <button class="btn btn-secondary" onclick="window.location.href='{{ path('app_logout') }}'">Déconnexion</button>
+                    <button class="btn btn-secondary" onclick="window.location.href='{{ path('app_logout') }}'">
+                        Déconnexion
+                    </button>
                 {% else %}
                     <button class="btn btn-secondary" onclick="showLoginModal()">Connexion</button>
                     <button class="btn btn-primary" onclick="showRegisterModal()">S'inscrire</button>

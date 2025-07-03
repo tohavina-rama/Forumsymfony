@@ -112,8 +112,8 @@ body {
     display: inline-block;
 }
 
-.addbtn {
-    color: red;
+#addbtn {
+    width: 10rem;
 }
 
 .btn-primary {

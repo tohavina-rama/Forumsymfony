@@ -3,12 +3,10 @@
 {% block title %}Sujets{% endblock %}
 
 {% block body %}
-    <div class="newsearch">
 
-        {% include '/include/searchbar.html.twig' %}
-        <a class="btn btn-secondary href="{{ path('app_posts_new') }}" class="btn-primary">Nouveau Sujet</a>
-    </div>
     <div class="container">
+
+        {% include '/partials/searchbar.html.Twig' %}
 
 
         <!-- Topics Container -->
@@ -17,29 +15,34 @@
                 <h2 class="section-title">
                     📋 Tous les sujets
                 </h2>
+                {% if app.user %}
+                    <a class="btn btn-primary" id="addbtn" href="{{ path('app_posts_new') }}"><span
+                            style="font-weight:bold;">&#43;</span> Nouveau Sujet</a>
+                {% endif %}
                 {% for post in posts %}
-                    <div class="topic-item" data-title="introduction développement web moderne">
-                        <div class="avatar">AH</div>
+
+                    <div class="topic-item" data-title="introduction développement web moderne"
+                         style="cursor:pointer;"
+                         onclick="window.location.href='{{ path('app_posts_show', {'id': post.id}) }}'">
+                        <div class="avatar">
+                            {{ post.author.firstName|slice(0, 1)|upper }}{{ post.author.lastName|slice(0, 1)|upper }}
+                        </div>
                         <div class="topic-info">
                             <div class="topic-title">{{ post.title }}</div>
                             <div><p class="post-excerpt">{{ post.content|slice(0, 120) ~ '...' }}</p></div>
                             <div class="topic-meta">
-                                <span>👤 Nom de l'auteur a réglé</span>
-                                <span>📅 {{ post.createdAt|date('d/m/Y') }}</span>
-                                <span class="category-tag dev">Catégorie à réglé</span>
+                                <span>👤 {{ post.author.firstName }} {{ post.author.lastName }} </span>
+                                <span>&nbsp; 📅 {{ post.createdAt|relative_time }}</span>
+                                <span class="category-tag dev">&nbsp;Catégorie à réglé</span>
                             </div>
-
                         </div>
-
-                        <div class="topic-actions">
-                            <a class="btn btn-success" href="{{ path('app_posts_show', {'id': post.id}) }}"
-                               class="post-link">👀 Voir</a>
-                        </div>
-
                     </div>
                 {% else %}
                     <p>Aucun post trouvé.</p>
                 {% endfor %}
+            </div>
+            <div class="navigation">
+                {{ knp_pagination_render(posts) }}
             </div>
         </div>
     </div>

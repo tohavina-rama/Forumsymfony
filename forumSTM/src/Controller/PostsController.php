@@ -6,6 +6,7 @@ use App\Entity\Posts;
 use App\Form\PostsForm;
 use App\Repository\PostsRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,10 +16,19 @@ use Symfony\Component\Routing\Attribute\Route;
 final class PostsController extends AbstractController
 {
     #[Route(name: 'app_posts_index', methods: ['GET'])]
-    public function index(PostsRepository $postsRepository): Response
+    public function index(PostsRepository $postsRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        return $this->render('posts/index.html.twig', [
-            'posts' => $postsRepository->findAll(),
+
+        $postsQuery = $postsRepository->findAll();
+
+        $posts = $paginator->paginate(
+            $postsQuery, /* query NOT result */
+            $request->query->getInt('page', 1), /* page number */
+            10 /* limit per page */
+        );
+
+        return $this->render('posts/index.html.Twig', [
+            'posts' => $posts,
         ]);
     }
 
@@ -28,15 +38,17 @@ final class PostsController extends AbstractController
         $post = new Posts();
         $form = $this->createForm(PostsForm::class, $post);
         $form->handleRequest($request);
+        $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $post->setAuthor($user);
             $entityManager->persist($post);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_posts_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('posts/new.html.twig', [
+        return $this->render('posts/new.html.Twig', [
             'post' => $post,
             'form' => $form,
         ]);
@@ -45,7 +57,7 @@ final class PostsController extends AbstractController
     #[Route('/{id}', name: 'app_posts_show', methods: ['GET'])]
     public function show(Posts $post): Response
     {
-        return $this->render('posts/show.html.twig', [
+        return $this->render('posts/show.html.Twig', [
             'post' => $post,
         ]);
     }
@@ -62,7 +74,7 @@ final class PostsController extends AbstractController
             return $this->redirectToRoute('app_posts_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('posts/edit.html.twig', [
+        return $this->render('posts/edit.html.Twig', [
             'post' => $post,
             'form' => $form,
         ]);

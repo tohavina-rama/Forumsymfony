@@ -1,3 +1,8 @@
+{% extends 'popup.html.twig' %}
+
+
+{% block body %}
+    <div class="container">
 <form method="post" action="{{ path('app_login') }}">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -29,6 +34,7 @@
     </button>
 
 </form>
-
+</div>
+{% endblock %}
 
 

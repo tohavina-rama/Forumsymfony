@@ -11,6 +11,6 @@ final class CategoryController extends AbstractController
     #[Route('/category', name: 'category.index')]
     public function index(): Response
     {
-        return $this->render('category/index.html.twig');
+        return $this->render('category/index.html.Twig');
     }
 }

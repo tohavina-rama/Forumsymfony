@@ -26,7 +26,7 @@ class Posts
 
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
-    private ?User $author = null;
+    private ?User $author;
 
     /**
      * @var Collection<int, Category>

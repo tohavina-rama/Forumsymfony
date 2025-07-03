@@ -1,0 +1,33 @@
+<!-- Recent Topics -->
+<div class="recent-topics">
+    <div class="topic-list">
+        <h2 class="section-title">
+            🔥 Sujets récents
+        </h2>
+        {% if app.user %}
+            <a class="btn btn-primary" id="addbtn" href="{{ path('app_posts_new') }}"><span
+                    style="font-weight:bold;">&#43;</span> Nouveau Sujet</a>
+        {% endif %}
+        {% for post in posts|slice(0, 5) %}
+
+            <div class="topic-item" data-title="introduction développement web moderne"
+                 style="cursor:pointer;"
+                 onclick="window.location.href='{{ path('app_posts_show', {'id': post.id}) }}'">
+                <div class="avatar">
+                    {{ post.author.firstName|slice(0, 1)|upper }}{{ post.author.lastName|slice(0, 1)|upper }}
+                </div>
+                <div class="topic-info">
+                    <div class="topic-title">{{ post.title }}</div>
+                    <div><p class="post-excerpt">{{ post.content|slice(0, 120) ~ '...' }}</p></div>
+                    <div class="topic-meta">
+                        <span>👤 {{ post.author.firstName }} {{ post.author.lastName }} </span>
+                        <span> &nbsp;📅{{ post.createdAt|relative_time }}</span>
+                        <span class="category-tag dev">   &nbsp;Catégorie à réglé</span>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>Aucun post trouvé.</p>
+        {% endfor %}
+    </div>
+</div>

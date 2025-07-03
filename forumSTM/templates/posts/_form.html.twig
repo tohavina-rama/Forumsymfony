@@ -1,5 +1,7 @@
 {{ form_start(form, {'action': path('app_posts_new')}) }}
 
+ {{ form_label(form.content, "Titre", {'label_attr': {'class': 'form-label'}}) }}
+
 <div class="form-group">
     {{ form_label(form.content, "Contenu", {'label_attr': {'class': 'form-label'}}) }}
     {{ form_widget(form.content, {'attr': {'class': 'form-input', 'placeholder': 'Écrivez votre message ici'}}) }}
