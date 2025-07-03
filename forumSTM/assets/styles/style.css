@@ -86,6 +86,21 @@ body {
     gap: 1rem;
 }
 
+.newsearch {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+
+.newsearch input {
+    flex: 1;
+    min-width: 0; /* Très important pour éviter les débordements */
+}
+
+.newsearch button {
+    /* Le bouton prend juste sa taille de contenu */
+}
+
 .btn {
     padding: 0.5rem 1rem;
     border: none;

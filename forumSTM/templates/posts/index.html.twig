@@ -3,11 +3,14 @@
 {% block title %}Sujets{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <a class="btn addbtn" href="{{ path('app_posts_new') }}" class="btn-primary">Nouveau Sujet</a>
+    <div class="newsearch">
 
         {% include '/include/searchbar.html.twig' %}
-        {% include '/include/recenttopics.html.twig' %}
+        <a class="btn btn-secondary href="{{ path('app_posts_new') }}" class="btn-primary">Nouveau Sujet</a>
+    </div>
+    <div class="container">
+
+
         <!-- Topics Container -->
         <div class="recent-topics">
             <div class="topic-list">
@@ -29,10 +32,10 @@
                         </div>
 
                         <div class="topic-actions">
-                            <a class="btn btn-success" href="{{ path('app_posts_show', {'id': post.id}) }}" class="post-link">👀 Voir</a>
+                            <a class="btn btn-success" href="{{ path('app_posts_show', {'id': post.id}) }}"
+                               class="post-link">👀 Voir</a>
                         </div>
 
-                        <a href="{{ path('app_posts_show', {'id': post.id}) }}" class="post-link">Voir</a>
                     </div>
                 {% else %}
                     <p>Aucun post trouvé.</p>
