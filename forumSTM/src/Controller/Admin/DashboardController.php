@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Category;
 use App\Entity\Comment;
 use App\Entity\Posts;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
@@ -49,5 +50,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Comment', 'fas fa-comment', Comment::class);
         yield MenuItem::linkToCrud('Posts', 'fas fa-file', Posts::class);
+        yield MenuItem::linkToCrud('Category', 'fas fa-layer-group', Category::class);
     }
 }

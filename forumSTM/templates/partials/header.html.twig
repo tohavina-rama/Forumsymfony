@@ -1,14 +1,12 @@
 <header class="header">
     <div class="container">
         <nav class="nav">
-            <div class="logo">ForumTech</div>
+            <div class="logo" onclick="window.location.href='{{ path('home') }}'">ForumTech</div>
             <ul class="nav-links">
                 <li><a href={{ path('home') }} >Accueil</a></li>
-                <li><a href={{ path('app_actuality_index'') }} >Actualités</a></li>
-                <li><a href={{ path('category.index') }} >Catégories</a></li>
-                <li><a href={{ path('app_posts_index') }} >Sujets</a></li>
-                <li><a href={{ path('app_members_index') }} >Membres</a></li>
-                <li><a href={{ path('app_search_index') }} >Recherche</a></li>
+                <li><a href={{ path('app_category_index') }} >Catégories</a></li>
+                <li><a href={{ path('app_posts_index') }} >Actualités</a></li>
+                <li><a href={{ path('app_contact') }} >Contact</a></li>
 
             </ul>
             <div class="user-menu">

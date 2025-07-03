@@ -1,7 +1,7 @@
 <!-- Recent Topics -->
 <div class="recent-topics">
     <div class="topic-list">
-        <h2 class="section-title">
+        <h2>
             🔥 Sujets récents
         </h2>
         {% if app.user %}
@@ -22,7 +22,7 @@
                     <div class="topic-meta">
                         <span>👤 {{ post.author.firstName }} {{ post.author.lastName }} </span>
                         <span> &nbsp;📅{{ post.createdAt|relative_time }}</span>
-                        <span class="category-tag dev">   &nbsp;Catégorie à réglé</span>
+                        <span class="category-tag dev">&nbsp;{{ post.category.name }}</span>
                     </div>
                 </div>
             </div>

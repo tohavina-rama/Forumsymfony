@@ -28,14 +28,18 @@ class Posts
     #[ORM\ManyToOne(inversedBy: 'posts')]
     private ?User $author;
 
-    /**
-     * @var Collection<int, Category>
-     */
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'post')]
-    private Collection $categories;
 
     #[ORM\Column(length: 255)]
     private ?string $title = null;
+
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    private ?Category $Category = null;
+
+    /**
+     * @var Collection<int, Comment>
+     */
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'posts')]
+    private Collection $comments;
 
 
     public function __construct()
@@ -43,7 +47,7 @@ class Posts
         $now = new \DateTimeImmutable();
         $this->createdAt = $now;
         $this->updatedAt = $now;
-        $this->categories = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -99,32 +103,6 @@ class Posts
         return $this;
     }
 
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Category $category): static
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-            $category->addPost($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): static
-    {
-        if ($this->categories->removeElement($category)) {
-            $category->removePost($this);
-        }
-
-        return $this;
-    }
 
     public function getTitle(): ?string
     {
@@ -134,6 +112,48 @@ class Posts
     public function setTitle(string $title): static
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->Category;
+    }
+
+    public function setCategory(?Category $Category): static
+    {
+        $this->Category = $Category;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setPosts($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getPosts() === $this) {
+                $comment->setPosts(null);
+            }
+        }
 
         return $this;
     }

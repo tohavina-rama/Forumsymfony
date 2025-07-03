@@ -1,34 +1,78 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Posts{% endblock %}
+{% block title %}Sujets{% endblock %}
 
 {% block body %}
-    <h1>Posts</h1>
+    <div class="container">
+        <div class="topic-header">
+            <h1 class="topic-title">{{ post.title }}</h1>
+            <div class="topic-meta">
+                <div
+                    class="avatar">{{ post.author.firstName|slice(0, 1)|upper }}{{ post.author.lastName|slice(0, 1)|upper }}</div>
+                <span>Créé par <strong>{{ post.author.firstName }} {{ post.author.lastName }}</strong></span>
+                <span>•</span>
+                <span>📅 {{ post.createdAt|relative_time }}</span>
+                <span>•</span>
+                <span>{{ post.category.name }}</span>
+                {% if app.user and app.user.id == post.author.id %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ post.id }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ post.content }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ post.updatedAt ? post.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+                    {{ include('posts/_delete_form.html.Twig') }}
+                    <button class="btn btn-secondary"
+                            onclick="window.location.href='{{ path('app_posts_edit', {'id': post.id}) }}'">Editer
+                    </button> {% endif %}
 
-    <a href="{{ path('app_posts_index') }}">back to list</a>
+            </div>
+            <div class="topic-stats">
+                <div class="stat">
+                    <div class="stat-number">{{ commentsNumber }}</div>
+                    <div class="stat-label">Réponses</div>
+                </div>
+            </div>
 
-    <a href="{{ path('app_posts_edit', {'id': post.id}) }}">edit</a>
+        </div>
+        <!-- Comments Section -->
 
-    {{ include('posts/_delete_form.html.Twig') }}
+        <div class="comments-section">
+            <div class="comments-header">
+                <h2>Commentaires</h2>
+                <span class="comments-count">
+                {{ commentsNumber }} {{ commentsNumber > 1 ? 'réponses' : 'réponse' }}</span>
+            </div>
+
+            {% for comment in comments %}
+
+                <div class="comment">
+                    <div class="comment-header">
+                        <div class="comment-avatar">{{ comment.author.firstName|slice(0, 1)|upper }}{{ comment.author.lastName|slice(0, 1)|upper }}</div>
+                        <div class="comment-author-info">
+                            <div class="comment-author">{{ comment.author.firstName }} {{ comment.author.lastName }}</div>
+                            <div class="comment-date">📅 {{ comment.createdAt|relative_time }}</div>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        <p>{{ comment.content }}</p>
+
+                    </div>
+                </div>
+
+            {% else %}
+                <p>Aucun commentaire trouvé ...</p>
+            {% endfor %}
+
+
+        </div>
+
+        <!-- Reply Form -->
+        <div class="reply-form">
+            <h3>Répondre à ce sujet</h3>
+            {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_widget(form.content, {'attr': {'class': 'form-textarea', 'placeholder': 'Écrivez votre réponse ici...'}}) }}
+                {{ form_errors(form.content) }}
+            </div>
+            <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
 {% endblock %}

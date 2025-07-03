@@ -24,12 +24,12 @@ class Category
     /**
      * @var Collection<int, Posts>
      */
-    #[ORM\ManyToMany(targetEntity: Posts::class, inversedBy: 'categories')]
-    private Collection $post;
+    #[ORM\OneToMany(targetEntity: Posts::class, mappedBy: 'category')]
+    private Collection $posts;
 
     public function __construct()
     {
-        $this->post = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -64,24 +64,8 @@ class Category
     /**
      * @return Collection<int, Posts>
      */
-    public function getPost(): Collection
+    public function getPosts(): Collection
     {
-        return $this->post;
-    }
-
-    public function addPost(Posts $post): static
-    {
-        if (!$this->post->contains($post)) {
-            $this->post->add($post);
-        }
-
-        return $this;
-    }
-
-    public function removePost(Posts $post): static
-    {
-        $this->post->removeElement($post);
-
-        return $this;
+        return $this->posts;
     }
 }

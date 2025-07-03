@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250702125601 extends AbstractMigration
+final class Version20250703155645 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,7 +21,13 @@ final class Version20250702125601 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE posts ADD title VARCHAR(255) NOT NULL
+            ALTER TABLE comment ADD posts_id INT DEFAULT NULL
+        SQL);
+        $this->addSql(<<<'SQL'
+            ALTER TABLE comment ADD CONSTRAINT FK_9474526CD5E258C5 FOREIGN KEY (posts_id) REFERENCES posts (id)
+        SQL);
+        $this->addSql(<<<'SQL'
+            CREATE INDEX IDX_9474526CD5E258C5 ON comment (posts_id)
         SQL);
         $this->addSql(<<<'SQL'
             ALTER TABLE user CHANGE roles roles JSON NOT NULL
@@ -35,10 +41,16 @@ final class Version20250702125601 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE messenger_messages CHANGE delivered_at delivered_at DATETIME DEFAULT 'NULL' COMMENT '(DC2Type:datetime_immutable)'
+            ALTER TABLE comment DROP FOREIGN KEY FK_9474526CD5E258C5
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE posts DROP title
+            DROP INDEX IDX_9474526CD5E258C5 ON comment
+        SQL);
+        $this->addSql(<<<'SQL'
+            ALTER TABLE comment DROP posts_id
+        SQL);
+        $this->addSql(<<<'SQL'
+            ALTER TABLE messenger_messages CHANGE delivered_at delivered_at DATETIME DEFAULT 'NULL' COMMENT '(DC2Type:datetime_immutable)'
         SQL);
         $this->addSql(<<<'SQL'
             ALTER TABLE user CHANGE roles roles LONGTEXT NOT NULL COLLATE `utf8mb4_bin`

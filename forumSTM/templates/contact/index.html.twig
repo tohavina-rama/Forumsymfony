@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+    <div class="container" style="max-width: 600px; margin: 3rem auto;">
+        <h1>Contactez-nous</h1>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+        {{ form_start(contactForm) }}
+            <div class="form-group">
+                {{ form_label(contactForm.name, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(contactForm.name) }}
+                {{ form_errors(contactForm.name) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(contactForm.email, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(contactForm.email) }}
+                {{ form_errors(contactForm.email) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(contactForm.message, null, {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(contactForm.message) }}
+                {{ form_errors(contactForm.message) }}
+            </div>
+            <div>
+                {{ form_widget(contactForm.submit) }}
+            </div>
+        {{ form_end(contactForm) }}
+    </div>
+{% endblock %}
