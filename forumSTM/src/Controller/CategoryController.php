@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Form\CategoryForm;
 use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use App\Repository\PostsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,10 +17,12 @@ use Symfony\Component\Routing\Attribute\Route;
 final class CategoryController extends AbstractController
 {
     #[Route(name: 'app_category_index', methods: ['GET'])]
-    public function index(CategoryRepository $categoryRepository, PostsRepository $postsRepository): Response
+    public function index(CategoryRepository $categoryRepository, PostsRepository $postsRepository, ): Response
     {
         $categories = $categoryRepository->findAll();
         $posts = $postsRepository->findAll();
+
+
 
         $categoryCounts = [];
         foreach ($categories as $category) {
@@ -37,6 +40,7 @@ final class CategoryController extends AbstractController
             'categories' => $categories,
             'posts' => $posts,
             'postsNumber' => $categoryCounts,
+
         ]);
     }
 
@@ -61,10 +65,12 @@ final class CategoryController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_category_show', methods: ['GET'])]
-    public function show(Category $category,PostsRepository $postsRepository): Response
+    public function show(Category $category,PostsRepository $postsRepository, ): Response
     {
         $posts = $postsRepository->findBy(['Category' => $category]);
+
         $postsNumber = count($posts);
+
 
         return $this->render('category/show.html.twig', [
             'category' => $category,

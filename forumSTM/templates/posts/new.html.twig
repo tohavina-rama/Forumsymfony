@@ -8,7 +8,7 @@
         <a class="retour" href="{{ path('app_posts_index') }}">Retour à la liste</a>
         <h1 class="sectionTitle">Créer un nouveau sujet</h1>
 
-        {{ include('posts/_form.html.Twig', {
+        {{ include('posts/_form.html.twig', {
             'form': form,
             'button_label': 'Enregistrer',
             'form_action': path('app_posts_new')

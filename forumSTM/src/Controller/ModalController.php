@@ -20,7 +20,7 @@ final class ModalController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('partials/modal.html.Twig', [
+        return $this->render('partials/modal.html.twig', [
             'registrationForm' => $form->createView(),
             'lastUsername' => $lastUsername,
             'error' => $error,

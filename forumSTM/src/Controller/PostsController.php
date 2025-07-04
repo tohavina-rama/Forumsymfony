@@ -30,7 +30,7 @@ final class PostsController extends AbstractController
             10 /* limit per page */
         );
 
-        return $this->render('posts/index.html.Twig', [
+        return $this->render('posts/index.html.twig', [
             'posts' => $posts,
         ]);
     }
@@ -51,7 +51,7 @@ final class PostsController extends AbstractController
             return $this->redirectToRoute('app_posts_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('posts/new.html.Twig', [
+        return $this->render('posts/new.html.twig', [
             'post' => $post,
             'form' => $form,
         ]);
@@ -78,7 +78,7 @@ final class PostsController extends AbstractController
             return $this->redirectToRoute('app_posts_show', ['id' => $post->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('posts/show.html.Twig', [
+        return $this->render('posts/show.html.twig', [
             'post' => $post,
             'form' => $form,
             'comments' => $comments,
@@ -102,7 +102,7 @@ final class PostsController extends AbstractController
             return $this->redirectToRoute('app_posts_show', ['id' => $post->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('posts/edit.html.Twig', [
+        return $this->render('posts/edit.html.twig', [
             'post' => $post,
             'form' => $form,
         ]);
