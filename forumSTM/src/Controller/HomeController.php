@@ -25,7 +25,7 @@ final class HomeController extends AbstractController
         $postsCount = $postsRepository->count([]);
 
 
-        return $this->render('/home/index.html.Twig', [
+        return $this->render('/home/index.html.twig', [
             'posts' => $posts,
             'postsCount' => $postsCount,
             'usersCount' => $usersCount,
